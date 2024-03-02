@@ -1,0 +1,6 @@
+@LibraryVue.Server_HostAddress = http://localhost:5020
+
+GET {{LibraryVue.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryVue.Server", "LibraryVue.Server\LibraryVue.Server.csproj", "{10CF3DFB-D331-4220-852D-9AEEBF0230A8}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "libraryvue.client", "libraryvue.client\libraryvue.client.esproj", "{94037277-1960-4302-AE75-EB65D7EDFC30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10CF3DFB-D331-4220-852D-9AEEBF0230A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CF3DFB-D331-4220-852D-9AEEBF0230A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CF3DFB-D331-4220-852D-9AEEBF0230A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CF3DFB-D331-4220-852D-9AEEBF0230A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD21EEDD-D7BD-4E5C-8CB2-2000FDFAA372}
+	EndGlobalSection
+EndGlobal
