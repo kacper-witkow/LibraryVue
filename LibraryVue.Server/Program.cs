@@ -1,4 +1,8 @@
 
+using Library.Server.Services;
+using NLog;
+using NLog.Web;
+
 namespace LibraryVue.Server
 {
     public class Program
@@ -9,10 +13,14 @@ namespace LibraryVue.Server
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            logger.Debug("Init");
+
+            builder.Services.AddServices();
+
+
+            builder.Logging.ClearProviders();
+            builder.Host.UseNLog();
 
             var app = builder.Build();
 
