@@ -1,9 +1,16 @@
 <template>
-  <div>
-    <ul>
-      <p class="m-1 bg-slate-400 p-1 text-xl">To jest 1</p>
-    </ul>
+  <br />
+  <div class="flex justify-center">
+    <BookCard />
   </div>
 </template>
 
-<script></script>
+<script>
+import BookCard from "./BookCard/BookCard.vue";
+
+export default {
+  components: {
+    BookCard,
+  },
+};
+</script>

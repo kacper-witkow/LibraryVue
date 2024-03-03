@@ -3,7 +3,7 @@
     <TopMenu />
   </div>
   <div
-    class="flex h-screen flex-row justify-center bg-gradient-to-tr from-slate-700 to-blue-400"
+    class="h-screen w-full justify-center bg-gradient-to-tr from-slate-700 to-blue-400"
   >
     <MainPage />
   </div>
