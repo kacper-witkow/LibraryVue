@@ -1,22 +1,22 @@
 <template>
-  <div class="w-full h-20 bg-yellow-200">
+  <div class="h-20 w-full bg-yellow-200">
     <TopMenu />
   </div>
-  <div class="flex flex-row bg-gradient-to-tr from-slate-700 to-blue-400 justify-center h-screen">
-      <MainPage />
+  <div
+    class="flex h-screen flex-row justify-center bg-gradient-to-tr from-slate-700 to-blue-400"
+  >
+    <MainPage />
   </div>
 </template>
 
-
 <script>
-import TopMenu from './components/TopMenu.vue'
-import MainPage from './components/MainPage.vue'
+import TopMenu from "./components/TopMenu.vue";
+import MainPage from "./components/MainPage.vue";
 
-export default{
-
+export default {
   components: {
     TopMenu,
-    MainPage
-  }
-}
+    MainPage,
+  },
+};
 </script>
