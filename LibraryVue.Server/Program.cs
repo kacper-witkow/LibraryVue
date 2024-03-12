@@ -1,4 +1,5 @@
 
+using Bibliotekarz.Shared.Model;
 using Library.Server.Services;
 using NLog;
 using NLog.Web;
@@ -42,6 +43,7 @@ namespace LibraryVue.Server
             app.MapControllers();
 
             app.MapFallbackToFile("/index.html");
+            app.MapGroup("api/auth").MapIdentityApi<RegisterModel>();
 
             app.Run();
         }
