@@ -13,7 +13,11 @@ namespace LibraryVue.Server
 
             // Add services to the container.
 
-            var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            //var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("nlog.config").GetCurrentClassLogger();
+
+
             logger.Debug("Init");
 
             builder.Services.AddServices(builder.Configuration);

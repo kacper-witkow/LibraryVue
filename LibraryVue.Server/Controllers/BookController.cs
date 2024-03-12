@@ -10,7 +10,6 @@ namespace Library.Server.Controllers
 {
 
     [ApiController]
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class BookController : Controller
     {
@@ -31,7 +30,7 @@ namespace Library.Server.Controllers
             return Ok(result);
         }
         [HttpGet("[action]")]
-        [Authorize(Roles =UserRoles.User)]
+        [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
             var result = await _databaseService.GetBooks();
