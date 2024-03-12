@@ -1,5 +1,6 @@
 ﻿using Bibliotekarz.Shared.Model;
 using Library.Server.Services;
+using LibraryVue.Server.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +10,16 @@ namespace Library.Server.Controllers
 {
 
     [ApiController]
-    [AllowAnonymous]
     [Route("api/[controller]")]
     public class BookController : Controller
     {
 
-        private readonly UserManager<RegisterModel> _userManager;
         private readonly ILogger<BookController> _logger;
         private readonly IBookDatabaseService _databaseService;
-        public BookController(UserManager<RegisterModel> userManager, IBookDatabaseService databaseService, ILogger<BookController> logger)
+        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger)
         {
             _logger = logger;
             _databaseService = databaseService;
-            _userManager = userManager;
         }
 
         [HttpGet("[action]")]
@@ -35,7 +33,8 @@ namespace Library.Server.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
-            return Ok();
+            var result = await _databaseService.GetBooks();
+            return Ok(result);
         }
         [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> Get(int Id)

@@ -1,5 +1,5 @@
-
 using Library.Server.Services;
+using LibraryVue.Server.Models.Auth;
 using NLog;
 using NLog.Web;
 
@@ -13,10 +13,14 @@ namespace LibraryVue.Server
 
             // Add services to the container.
 
-            var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+            //var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("nlog.config").GetCurrentClassLogger();
+
+
             logger.Debug("Init");
 
-            builder.Services.AddServices();
+            builder.Services.AddServices(builder.Configuration);
 
 
             builder.Logging.ClearProviders();
@@ -37,6 +41,7 @@ namespace LibraryVue.Server
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
 
             app.MapControllers();
