@@ -1,5 +1,6 @@
 ﻿using Bibliotekarz.Shared.Model;
 using Library.Server.Services;
+using LibraryVue.Server.Models.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace Library.Server.Controllers
             return Ok(result);
         }
         [HttpGet("[action]")]
-        [Authorize]
+        [Authorize(Roles =UserRoles.User)]
         public async Task<IActionResult> GetAllAuth()
         {
             var result = await _databaseService.GetBooks();

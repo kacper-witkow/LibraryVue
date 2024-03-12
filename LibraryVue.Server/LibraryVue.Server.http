@@ -4,3 +4,9 @@ GET {{LibraryVue.Server_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+GET {{LibraryVue.Server_HostAddress}}/api/Book/GetAll
+Accept: application/json
+
+###
+POST {{LibraryVue.Server_HostAddress}}/api/Authenticate/login
+Accept: application/json
