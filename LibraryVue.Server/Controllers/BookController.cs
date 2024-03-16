@@ -33,6 +33,7 @@ namespace Library.Server.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
+            _logger.LogInformation("Authorize books.");
             var result = await _databaseService.GetBooks();
             return Ok(result);
         }

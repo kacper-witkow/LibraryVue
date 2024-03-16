@@ -1,4 +1,5 @@
-﻿using LibraryVue.Server.Models;
+﻿using Library.Server.Controllers;
+using LibraryVue.Server.Models;
 using LibraryVue.Server.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,14 @@ namespace LibraryVue.Server.Controllers
             private readonly UserManager<ApplicationUser> userManager;
             private readonly RoleManager<IdentityRole> roleManager;
             private readonly IConfiguration _configuration;
+            private readonly ILogger<AuthenticateController> _logger;
 
-            public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration,ILogger<AuthenticateController> logger)
             {
                 this.userManager = userManager;
                 this.roleManager = roleManager;
                 _configuration = configuration;
+                _logger = logger;
             }
 
             [HttpPost]
@@ -80,6 +83,8 @@ namespace LibraryVue.Server.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+
+                _logger.LogInformation("New account created. Name: " + model.Username.ToString());
 
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
