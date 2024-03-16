@@ -5,18 +5,16 @@
   <div
     class="h-screen w-full justify-center bg-gradient-to-tr from-slate-700 to-blue-400"
   >
-    <MainPage />
+    <router-view />
   </div>
 </template>
 
 <script>
 import TopMenu from "./components/TopMenu.vue";
-import MainPage from "./components/MainPage.vue";
 
 export default {
   components: {
     TopMenu,
-    MainPage,
   },
 };
 </script>
