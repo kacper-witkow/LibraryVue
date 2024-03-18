@@ -10,7 +10,7 @@ namespace Library.Server.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     public class BookController : Controller
     {
 

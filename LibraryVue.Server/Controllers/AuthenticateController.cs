@@ -10,7 +10,7 @@ using System.Text;
 
 namespace LibraryVue.Server.Controllers
 {
-        [Route("api/[controller]")]
+        [Route("Api/[controller]")]
         [ApiController]
         public class AuthenticateController : ControllerBase
         {
@@ -109,12 +109,12 @@ namespace LibraryVue.Server.Controllers
 
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
                 if (await roleManager.RoleExistsAsync(UserRoles.Admin))
                 {
                     await userManager.AddToRoleAsync(user, UserRoles.Admin);
+
+                    _logger.LogInformation("New admin account created. Name: " + model.Username.ToString());
                 }
 
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });
