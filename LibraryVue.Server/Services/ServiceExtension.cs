@@ -4,6 +4,7 @@ using Library.Server.Databases.Contexts;
 using LibraryVue.Server.Models.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -18,7 +19,7 @@ namespace Library.Server.Services
         {
 
             // Database
-            services.AddDbContext<BooksDbContext>();
+            services.AddDbContext<BooksDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookDB")));
 
             services.AddDbContext<UsersDbContext>();
             services.AddScoped<IBookDatabaseService, BookDatabaseService>();

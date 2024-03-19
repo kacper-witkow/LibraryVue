@@ -1,0 +1,30 @@
+version: '3.4'
+
+networks:
+  libraryapi:
+
+services:
+  libraryvue.server:
+    image: ${DOCKER_REGISTRY-}libraryvueserver
+    build:
+      context: .
+      dockerfile: LibraryVue.Server/Dockerfile
+    ports:
+    - '8080:8080'
+    - '8081:8081'
+    container_name: libraryvue.api
+    networks: 
+        - libraryapi
+
+  libraryvue.database.books:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: libraryvue.database.books
+    environment:
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=yourStrong(!)Password1
+    ports:
+    - 1433:1433
+    volumes:
+    - ./.containers/books-database:/var/opt/mssql/data
+    networks:
+    - libraryapi

@@ -22,7 +22,7 @@ namespace Library.Server.Databases.Contexts
         public UsersDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<UsersDbContext>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-74V2UDI;Initial Catalog=LibraryUsers2;Integrated Security=True;Encrypt=False");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-74V2UDI;Password=;Initial Catalog=LibraryUsers2;Integrated Security=True;Encrypt=False");
 
             return new UsersDbContext(optionsBuilder.Options);
         }
