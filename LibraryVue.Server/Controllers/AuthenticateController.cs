@@ -1,4 +1,5 @@
-﻿using LibraryVue.Server.Models;
+﻿using Library.Server.Controllers;
+using LibraryVue.Server.Models;
 using LibraryVue.Server.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +10,21 @@ using System.Text;
 
 namespace LibraryVue.Server.Controllers
 {
-        [Route("api/[controller]")]
+        [Route("Api/[controller]")]
         [ApiController]
         public class AuthenticateController : ControllerBase
         {
             private readonly UserManager<ApplicationUser> userManager;
             private readonly RoleManager<IdentityRole> roleManager;
             private readonly IConfiguration _configuration;
+            private readonly ILogger<AuthenticateController> _logger;
 
-            public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration,ILogger<AuthenticateController> logger)
             {
                 this.userManager = userManager;
                 this.roleManager = roleManager;
                 _configuration = configuration;
+                _logger = logger;
             }
 
             [HttpPost]
@@ -81,6 +84,8 @@ namespace LibraryVue.Server.Controllers
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
+                _logger.LogInformation("New account created. Name: " + model.Username.ToString());
+
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
 
@@ -104,12 +109,12 @@ namespace LibraryVue.Server.Controllers
 
                 if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
                 if (await roleManager.RoleExistsAsync(UserRoles.Admin))
                 {
                     await userManager.AddToRoleAsync(user, UserRoles.Admin);
+
+                    _logger.LogInformation("New admin account created. Name: " + model.Username.ToString());
                 }
 
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });

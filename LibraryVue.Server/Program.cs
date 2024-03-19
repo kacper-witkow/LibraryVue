@@ -43,6 +43,11 @@ namespace LibraryVue.Server
             app.UseAuthorization();
             app.UseAuthentication();
 
+            app.UseCors(options =>
+            options.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            ) ;
 
             app.MapControllers();
 

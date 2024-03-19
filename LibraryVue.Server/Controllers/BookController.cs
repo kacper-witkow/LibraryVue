@@ -10,7 +10,7 @@ namespace Library.Server.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     public class BookController : Controller
     {
 
@@ -33,6 +33,7 @@ namespace Library.Server.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
+            _logger.LogInformation("Authorize books.");
             var result = await _databaseService.GetBooks();
             return Ok(result);
         }
