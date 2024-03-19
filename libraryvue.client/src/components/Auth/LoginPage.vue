@@ -35,18 +35,5 @@
   </div>
 </template>
 <script>
-export default {
-  name: "Login",
-  data() {
-    return {
-      Password: string,
-      Email: string,
-    };
-  },
-  methods: {
-    Login() {
-      console.log("Signed in");
-    },
-  },
-};
+export default {};
 </script>

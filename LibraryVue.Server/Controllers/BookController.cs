@@ -22,6 +22,13 @@ namespace Library.Server.Controllers
             _databaseService = databaseService;
         }
 
+
+        [HttpGet("[action]")]
+        public string Test()
+        {
+            return "Dziala";
+        }
+
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
