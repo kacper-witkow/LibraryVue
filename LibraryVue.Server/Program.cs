@@ -1,5 +1,7 @@
+using Bibliotekarz.Server.Data.Context;
 using Library.Server.Services;
 using LibraryVue.Server.Models.Auth;
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
 
@@ -15,13 +17,13 @@ namespace LibraryVue.Server
 
             //var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-            var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("nlog.config").GetCurrentClassLogger();
-
-
-            logger.Debug("Init");
+            
 
             builder.Services.AddServices(builder.Configuration);
 
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("nlog.config").GetCurrentClassLogger();
+
+            logger.Debug("Init");
 
             builder.Logging.ClearProviders();
             builder.Host.UseNLog();
@@ -36,6 +38,11 @@ namespace LibraryVue.Server
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+            }
+
+            using (IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetService<BooksDbContext>().Database.Migrate();
             }
 
             app.UseHttpsRedirection();

@@ -21,14 +21,17 @@ RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get install -y nodejs
 
+
+
+
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["libraryvue.client/nuget.config", "libraryvue.client/"]
 COPY ["LibraryVue.Server/LibraryVue.Server.csproj", "LibraryVue.Server/"]
 COPY ["libraryvue.client/libraryvue.client.esproj", "libraryvue.client/"]
 RUN dotnet restore "./LibraryVue.Server/LibraryVue.Server.csproj"
-COPY . .
 WORKDIR "/src/LibraryVue.Server"
+RUN mv /src/libraryvue.client/dist /app/wwwroot
 RUN dotnet build "./LibraryVue.Server.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 

@@ -1,0 +1,9 @@
+2024-03-20 11:15:57.9485 Info Loading assembly name: NLog.Web.AspNetCore
+2024-03-20 11:15:57.9963 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.8.1035. Product version: 5.3.8+0c5db2371c65c25905734b0335fd0c593ee61ad6. GlobalAssemblyCache: False
+2024-03-20 11:15:58.0261 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2024-03-20 11:15:58.0302 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2024-03-20 11:15:58.0450 Info Registered target NLog.Targets.ConsoleTarget(Name=lifetimeConsole)
+2024-03-20 11:15:58.0534 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.8.2366. Product version: 5.2.8+f586f1341c46fa38aaaff4c641e7f0fa7e813943. GlobalAssemblyCache: False
+2024-03-20 11:15:58.0642 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=50, FilePath=/app/bin/Debug/net8.0/nlog.config
+2024-03-20 11:15:58.0754 Info Configuration initialized.
+2024-03-20 11:15:58.1542 Info Validating config: TargetNames=allfile, lifetimeConsole, ownFile-web, ConfigItems=50, FilePath=/app/bin/Debug/net8.0/nlog.config

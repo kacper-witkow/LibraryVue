@@ -15,17 +15,8 @@ services:
     container_name: libraryvue.api
     networks: 
         - libraryapi
-
-  libraryvue.frontend:
-    image: ${DOCKER_REGISTRY-}libraryvuefrontend
-    build:
-      context: .
-      dockerfile: LibraryVue.client/Dockerfile
-    ports:
-    - '5173:5173'
-    container_name: libraryvue.frontend
-    networks: 
-        - libraryapi
+    volumes:
+    - ./.containers/logs:/log
 
   libraryvue.database.books:
     image: mcr.microsoft.com/mssql/server:latest

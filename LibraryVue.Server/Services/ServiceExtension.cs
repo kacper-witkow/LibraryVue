@@ -19,10 +19,13 @@ namespace Library.Server.Services
         {
 
             // Database
-            services.AddDbContext<BooksDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookDB")));
+
+            services.AddDbContext<BooksDbContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("BookDB"))
+            );
+            services.AddScoped<IBookDatabaseService, BookDatabaseService>();
 
             services.AddDbContext<UsersDbContext>();
-            services.AddScoped<IBookDatabaseService, BookDatabaseService>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>();
