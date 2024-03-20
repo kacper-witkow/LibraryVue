@@ -39,12 +39,12 @@ namespace LibraryVue.Server
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+/*
             using (IServiceScope scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 scope.ServiceProvider.GetService<BooksDbContext>().Database.Migrate();
             }
-
+*/
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

@@ -19,11 +19,11 @@ services:
     - ./.containers/logs:/log
 
   libraryvue.database.books:
-    image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: libraryvue.database.books
     environment:
     - ACCEPT_EULA=Y
-    - MSSQL_SA_PASSWORD=yourStrong(!)Password1
+    - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
     ports:
     - 1433:1433
     volumes:
