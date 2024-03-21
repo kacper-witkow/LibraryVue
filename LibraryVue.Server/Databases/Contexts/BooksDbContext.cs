@@ -15,9 +15,7 @@ namespace Bibliotekarz.Server.Data.Context
 
         public DbSet<BookDto> Books { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-       => options.UseSqlServer($"Data Source=DESKTOP-74V2UDI;Initial Catalog=Library;Integrated Security=True;Encrypt=False");
-
+        public BooksDbContext(DbContextOptions<BooksDbContext> dbContextOptions) : base(dbContextOptions) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

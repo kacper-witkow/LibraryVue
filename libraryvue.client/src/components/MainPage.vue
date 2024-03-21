@@ -1,6 +1,5 @@
 <template>
   <br />
-  <button @click="GetBooks" class="bg-slate-50 p-10"></button>
   <div class="flex justify-center">
     <BookCard />
   </div>

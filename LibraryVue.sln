@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryVue.Server", "Librar
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "libraryvue.client", "libraryvue.client\libraryvue.client.esproj", "{94037277-1960-4302-AE75-EB65D7EDFC30}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C44283E1-0129-4F58-8E2A-2141FFC2560D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94037277-1960-4302-AE75-EB65D7EDFC30}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C44283E1-0129-4F58-8E2A-2141FFC2560D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44283E1-0129-4F58-8E2A-2141FFC2560D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44283E1-0129-4F58-8E2A-2141FFC2560D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44283E1-0129-4F58-8E2A-2141FFC2560D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

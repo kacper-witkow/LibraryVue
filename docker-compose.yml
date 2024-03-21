@@ -1,0 +1,42 @@
+version: '3.4'
+
+networks:
+  libraryapi:
+
+services:
+  libraryvue.server:
+    image: ${DOCKER_REGISTRY-}libraryvueserver
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+    - '8080:8080'
+    - '8081:8081'
+    container_name: libraryvue.api
+    networks: 
+        - libraryapi
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      - ./.containers/logs:/log
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    command:
+       - dotnet
+       - LibraryVue.Server.dll
+
+  libraryvue.database.books:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: libraryvue.database.books
+    environment:
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+    - 1433:1433
+    volumes:
+    - ./.containers/books-database:/var/opt/mssql/data
+    networks:
+    - libraryapi
