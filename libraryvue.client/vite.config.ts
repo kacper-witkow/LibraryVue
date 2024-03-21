@@ -24,13 +24,13 @@ export default defineConfig({
   server: {
     proxy: {
       "/books": {
-        target: "https://localhost:7021/api/Book",
+        target: "https://localhost:8081/api/Book",
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       "/auth": {
-        target: "https://localhost:7021/Api/Authenticate",
+        target: "https://localhost:8081/Api/Authenticate",
         changeOrigin: true,
         secure: false,
         ws: true,

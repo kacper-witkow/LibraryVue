@@ -8,7 +8,7 @@ services:
     image: ${DOCKER_REGISTRY-}libraryvueserver
     build:
       context: .
-      dockerfile: LibraryVue.Server/Dockerfile
+      dockerfile: ./Dockerfile
     ports:
     - '8080:8080'
     - '8081:8081'
@@ -16,7 +16,16 @@ services:
     networks: 
         - libraryapi
     volumes:
-    - ./.containers/logs:/log
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ./.containers/logs:/log
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    command:
+       - dotnet
+       - LibraryVue.Server.dll
 
   libraryvue.database.books:
     image: mcr.microsoft.com/mssql/server:2022-latest

@@ -1,5 +1,8 @@
 <template>
   <br />
+  <p class="bg-slate-100 text-center text-2xl text-red-700">
+    Kurwa ma się pokazac
+  </p>
   <div class="flex justify-center">
     <BookCard />
   </div>
