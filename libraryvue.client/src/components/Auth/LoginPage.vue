@@ -26,7 +26,7 @@
       <div class="flex justify-center">
         <button
           class="m-1 content-center rounded-lg bg-cyan-500 p-2 text-center text-3xl hover:bg-green-600"
-          @click.prevent="Login"
+          v-on:click="Login"
         >
           Sign in
         </button>
@@ -34,6 +34,18 @@
     </form>
   </div>
 </template>
-<script>
-export default {};
+<script lang="ts">
+export default {
+  data() {
+    return {
+      Password: "",
+      Email: "",
+    };
+  },
+  methods: {
+    Login() {
+      console.log("logowanie");
+    },
+  },
+};
 </script>
