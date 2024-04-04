@@ -1,7 +1,15 @@
 <template>
   <br />
-  <div class="flex justify-center">
-    <BookCard />
+  <div class="flex flex-col object-center">
+    <div v-for="book in books" :key="book.id">
+      <BookCard
+        :title="book.title"
+        :author="book.autor"
+        :numberOfPages="book.numerOfPages"
+        :isBorrowed="book.isBorrowed"
+      />
+    </div>
+    <button @click="GetBook">pobierz</button>
   </div>
 </template>
 
@@ -12,12 +20,24 @@ export default {
   components: {
     BookCard,
   },
+  data() {
+    return {
+      books: [],
+    };
+  },
   methods: {
-    GetBooks: async function () {
-      const response = await fetch("https://localhost:7021/api/Book/GetAll");
-      const names = await response.json();
-      console.log(names);
+    GetBook() {
+      fetch("https://localhost:7021/api/Book/Getall", {
+        method: "GET",
+      })
+        .then((response) =>
+          response.json().then((data) => console.log((this.books = data))),
+        )
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
+  setup() {},
 };
 </script>
