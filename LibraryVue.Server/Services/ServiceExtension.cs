@@ -15,14 +15,25 @@ namespace Library.Server.Services
 {
     public static class ServiceExtension
     {
-        public static IServiceCollection AddServices(this IServiceCollection services,IConfiguration Configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services,IConfiguration Configuration, IWebHostEnvironment environment)
         {
 
             // Database
+            if (environment.IsDevelopment())
+            {
+                services.AddDbContext<BooksDbContext>(options =>
+                options.UseSqlServer("Data Source=DESKTOP-74V2UDI;Initial Catalog=Library;Integrated Security=True;Encrypt=False")
+                );
 
-            services.AddDbContext<BooksDbContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("BookDB"))
-            );
+            }
+            else
+            {
+                services.AddDbContext<BooksDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("BookDB"))
+                );
+            }
+
+
             services.AddScoped<IBookDatabaseService, BookDatabaseService>();
 
             services.AddDbContext<UsersDbContext>();

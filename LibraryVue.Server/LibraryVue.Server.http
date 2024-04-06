@@ -1,10 +1,7 @@
-@LibraryVue.Server_HostAddress = http://localhost:5020
-
-GET {{LibraryVue.Server_HostAddress}}/weatherforecast/
-Accept: application/json
+@LibraryVue.Server_HostAddress = https://localhost:7021
 
 ###
-GET {{LibraryVue.Server_HostAddress}}/api/Book/GetAll
+GET {{LibraryVue.Server_HostAddress}}/api/Book/Getall
 Accept: application/json
 
 ###
