@@ -2,10 +2,9 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-vue";
-import fs from "fs";
-import path from "path";
-import child_process from "child_process";
 import { env } from "process";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
@@ -15,6 +14,11 @@ const target = env.ASPNETCORE_HTTPS_PORT
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    postcss: {
+      plugins: [tailwind(), autoprefixer()],
+    },
+  },
   plugins: [plugin()],
   resolve: {
     alias: {

@@ -24,18 +24,23 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <button
+        <Button
           class="m-1 content-center rounded-lg bg-cyan-500 p-2 text-center text-3xl hover:bg-green-600"
           v-on:click="Login"
         >
           Sign in
-        </button>
+        </Button>
       </div>
     </form>
   </div>
 </template>
 <script lang="ts">
+import { Button } from "../ui/button";
+
 export default {
+  components: {
+    Button,
+  },
   data() {
     return {
       Password: "",
