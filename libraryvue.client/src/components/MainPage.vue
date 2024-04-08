@@ -9,7 +9,6 @@
         :isBorrowed="book.isBorrowed"
       />
     </div>
-    <button @click="GetBook">pobierz</button>
   </div>
 </template>
 
@@ -38,6 +37,8 @@ export default {
         });
     },
   },
-  setup() {},
+  mounted() {
+    this.GetBook();
+  },
 };
 </script>
