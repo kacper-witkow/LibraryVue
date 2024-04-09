@@ -1,5 +1,5 @@
 <template>
-  <navbar class="flex w-screen justify-between">
+  <navbar class="flex w-screen justify-between bg-slate-400">
     <div class="flex">
       <p class="pl-8 pt-6 text-2xl"><a href="./">Library</a></p>
     </div>

@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BookCard from "./BookCard/BookCard.vue";
 
 export default {

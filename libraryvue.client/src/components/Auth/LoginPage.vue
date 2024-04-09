@@ -1,55 +1,73 @@
 <template>
-  <div class="flex content-center justify-center">
-    <form>
-      <h3 class="m-1 text-center text-3xl">Sign In</h3>
-      <div class="flex">
-        <div class="flex flex-col">
-          <label class="m-1 p-3">Email</label>
-          <label class="m-1 p-3">Password</label>
-        </div>
+  <form class="mt-5 w-2/3 space-y-6 pl-20" @submit="onSubmit">
+    <FormField name="username">
+      <FormItem>
+        <FormLabel>Username</FormLabel>
+        <FormControl>
+          <Input type="text" placeholder="Username" v-bind="componentField" />
+        </FormControl>
+        <FormDescription> This is your public display name. </FormDescription>
+        <FormMessage />
+      </FormItem>
+    </FormField>
 
-        <div class="flex flex-col">
-          <input
-            class="m-1 p-3"
-            v-model="Email"
-            type="email"
-            placeholder="email"
-          />
-          <input
-            class="m-1 p-3"
-            v-model="Password"
+    <FormField name="email">
+      <FormItem>
+        <FormLabel>Email</FormLabel>
+        <FormControl>
+          <Input type="email" placeholder="Email" v-bind="componentField" />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+
+    <FormField name="password">
+      <FormItem>
+        <FormLabel>Password</FormLabel>
+        <FormControl>
+          <Input
             type="password"
-            placeholder="password"
+            placeholder="Password"
+            v-bind="componentField"
           />
-        </div>
-      </div>
-      <div class="flex justify-center">
-        <Button
-          class="m-1 content-center rounded-lg bg-cyan-500 p-2 text-center text-3xl hover:bg-green-600"
-          v-on:click="Login"
-        >
-          Sign in
-        </Button>
-      </div>
-    </form>
-  </div>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </FormField>
+    <Button type="submit"> Submit </Button>
+  </form>
 </template>
+
 <script lang="ts">
-import { Button } from "../ui/button";
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 export default {
   components: {
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
     Button,
-  },
-  data() {
-    return {
-      Password: "",
-      Email: "",
-    };
+    Input,
   },
   methods: {
-    Login() {
-      console.log("logowanie");
+    onSubmit(values) {
+      console.log(values);
     },
   },
 };
