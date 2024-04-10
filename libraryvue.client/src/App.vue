@@ -1,6 +1,8 @@
 <template>
   <TopMenu />
-  <router-view />
+  <div class="flex justify-center">
+    <router-view />
+  </div>
 </template>
 
 <script>

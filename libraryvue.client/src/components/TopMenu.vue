@@ -6,10 +6,10 @@
     <div>
       <ul class="flex">
         <li class="mr-4 mt-3 justify-center rounded-lg p-4 hover:bg-orange-300">
-          <a href="register">Register</a>
+          <a href="register">Sing Up</a>
         </li>
         <li class="mr-8 mt-3 rounded-lg p-4 hover:bg-orange-300">
-          <a href="login">Login</a>
+          <a href="login">Log In</a>
         </li>
       </ul>
     </div>
