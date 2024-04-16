@@ -31,7 +31,7 @@ namespace LibraryVue.Server.Controllers
             [Route("login")]
             public async Task<IActionResult> Login([FromBody] LoginModel model)
             {
-                var user = await userManager.FindByNameAsync(model.Username);
+                var user = await userManager.FindByEmailAsync(model.Email);
                 if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var userRoles = await userManager.GetRolesAsync(user);
@@ -71,8 +71,8 @@ namespace LibraryVue.Server.Controllers
             [Route("register")]
             public async Task<IActionResult> Register([FromBody] RegisterModel model)
             {
-                var userExists = await userManager.FindByNameAsync(model.Username);
-                if (userExists != null)
+                var emailExists = await userManager.FindByEmailAsync(model.Email);
+                if (emailExists != null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
                 ApplicationUser user = new ApplicationUser()

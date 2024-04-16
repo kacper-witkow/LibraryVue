@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       Email: "",
-      Name: "",
+      Username: "",
       Password: "",
       title: "Register",
       backHrefText: "You already have account?",
@@ -83,13 +83,14 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            Username: this.Name,
+            Username: this.Username,
             Email: this.Email,
             Password: this.Password,
           }),
         },
       );
       console.log(response.json());
+      this.$router.push("/");
     },
   },
 };

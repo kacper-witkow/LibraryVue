@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CardWrapper from "./CardWrapper.vue";
+import { mapMutations } from "@/store/store";
 
 export default {
   components: {
@@ -58,6 +59,7 @@ export default {
     Button,
   },
   methods: {
+    ...mapMutations(["setUser", "setToken"]),
     async Login() {
       console.log(this.Password);
       console.log("Logowanie");
@@ -74,7 +76,10 @@ export default {
           }),
         },
       );
-      console.log(response.json());
+      const { user, token } = await response.json();
+      this.setUser(user);
+      this.setToken(token);
+      this.$router.push("/");
     },
   },
   data() {
