@@ -44,7 +44,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CardWrapper from "./CardWrapper.vue";
-import { mapMutations } from "@/store/store";
 
 export default {
   components: {
@@ -59,27 +58,24 @@ export default {
     Button,
   },
   methods: {
-    ...mapMutations(["setUser", "setToken"]),
+    //   ...mapMutations(["setUser", "setToken"]),
     async Login() {
       console.log(this.Password);
       console.log("Logowanie");
-      const response = await fetch(
-        "https://localhost:7021/api/authenticate/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            Email: this.Email,
-            Password: this.Password,
-          }),
+      const response = await fetch("/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          Email: this.Email,
+          Password: this.Password,
+        }),
+      });
       const { user, token } = await response.json();
-      this.setUser(user);
-      this.setToken(token);
-      this.$router.push("/");
+      // this.setUser(user);
+      // this.setToken(token);
+      // this.$router.push("/");
     },
   },
   data() {

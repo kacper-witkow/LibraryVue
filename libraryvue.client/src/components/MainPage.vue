@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     GetBook() {
-      fetch("https://localhost:7021/api/Book/Getall", {
+      fetch("/books/Getall", {
         method: "GET",
       })
         .then((response) =>

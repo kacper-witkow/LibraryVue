@@ -75,20 +75,17 @@ export default {
   methods: {
     async Register() {
       console.log("Rejestrowanie");
-      const response = await fetch(
-        "https://localhost:7021/api/authenticate/Register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            Username: this.Username,
-            Email: this.Email,
-            Password: this.Password,
-          }),
+      const response = await fetch("/auth/Register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          Username: this.Username,
+          Email: this.Email,
+          Password: this.Password,
+        }),
+      });
       console.log(response.json());
       this.$router.push("/");
     },

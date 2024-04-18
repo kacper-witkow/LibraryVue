@@ -8,13 +8,9 @@
 
 <script>
 import TopMenu from "./components/TopMenu.vue";
-import { mapGetters } from "vuex";
 export default {
   components: {
     TopMenu,
-  },
-  computed: {
-    ...mapGetters(["isLoggedIn"]),
   },
 };
 </script>
