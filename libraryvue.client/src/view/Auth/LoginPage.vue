@@ -75,7 +75,7 @@ export default {
       const { user, token } = await response.json();
       // this.setUser(user);
       // this.setToken(token);
-      // this.$router.push("/");
+      this.$router.push("/");
     },
   },
   data() {

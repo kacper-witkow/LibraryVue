@@ -6,6 +6,7 @@
         :author="book.author"
         :numberOfPages="book.numberOfPages"
         :isBorrowed="book.isBorrowed"
+        :id="book.id"
       />
     </div>
   </div>
@@ -28,9 +29,7 @@ export default {
       fetch("/books/Getall", {
         method: "GET",
       })
-        .then((response) =>
-          response.json().then((data) => console.log((this.books = data))),
-        )
+        .then((response) => response.json().then((data) => (this.books = data)))
         .catch((err) => {
           console.error(err);
         });

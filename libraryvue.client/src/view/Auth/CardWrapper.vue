@@ -20,7 +20,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { RouterLink } from "vue-router";
 export default {
   components: {
     Card,
