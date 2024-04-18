@@ -11,9 +11,9 @@ namespace Bibliotekarz.Shared.Model;
 public class BookDto
 {
     public int Id { get; set; }
-    public string Autor { get; set; }
+    public string Author { get; set; }
     public string Title { get; set; }
-    public int NumerOfPages { get; set; }
+    public int NumberOfPages { get; set; }
     public bool IsBorrowed { get; set; }
 
 }

@@ -2,10 +2,9 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-vue";
-import fs from "fs";
-import path from "path";
-import child_process from "child_process";
 import { env } from "process";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
 const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
@@ -15,6 +14,11 @@ const target = env.ASPNETCORE_HTTPS_PORT
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    postcss: {
+      plugins: [tailwind(), autoprefixer()],
+    },
+  },
   plugins: [plugin()],
   resolve: {
     alias: {
@@ -24,16 +28,18 @@ export default defineConfig({
   server: {
     proxy: {
       "/books": {
-        target: "https://localhost:8081/api/Book",
+        target: "https://localhost:7021/api/Book",
         changeOrigin: true,
         secure: false,
         ws: true,
+        rewrite: (path) => path.replace(/^\/books/, ""),
       },
       "/auth": {
-        target: "https://localhost:8081/Api/Authenticate",
+        target: "https://localhost:7021/Api/Authenticate",
         changeOrigin: true,
         secure: false,
         ws: true,
+        rewrite: (path) => path.replace(/^\/auth/, ""),
       },
     },
     port: 5173,

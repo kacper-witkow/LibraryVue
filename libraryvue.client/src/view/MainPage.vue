@@ -1,18 +1,18 @@
 <template>
-  <br />
-  <div class="flex flex-col object-center">
+  <div class="flex w-5/6 flex-col object-center">
     <div v-for="book in books" :key="book.id">
       <BookCard
         :title="book.title"
-        :author="book.autor"
-        :numberOfPages="book.numerOfPages"
+        :author="book.author"
+        :numberOfPages="book.numberOfPages"
         :isBorrowed="book.isBorrowed"
+        :id="book.id"
       />
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import BookCard from "./BookCard/BookCard.vue";
 
 export default {
@@ -25,20 +25,18 @@ export default {
     };
   },
   methods: {
-    GetBook() {
-      fetch("https://localhost:7021/api/Book/Getall", {
+    GetBooks() {
+      fetch("/books/Getall", {
         method: "GET",
       })
-        .then((response) =>
-          response.json().then((data) => console.log((this.books = data))),
-        )
+        .then((response) => response.json().then((data) => (this.books = data)))
         .catch((err) => {
           console.error(err);
         });
     },
   },
   mounted() {
-    this.GetBook();
+    this.GetBooks();
   },
 };
 </script>
