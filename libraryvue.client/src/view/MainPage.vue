@@ -1,11 +1,10 @@
 <template>
-  <br />
-  <div class="flex w-4/5 flex-col object-center">
+  <div class="flex w-5/6 flex-col object-center">
     <div v-for="book in books" :key="book.id">
       <BookCard
         :title="book.title"
-        :author="book.autor"
-        :numberOfPages="book.numerOfPages"
+        :author="book.author"
+        :numberOfPages="book.numberOfPages"
         :isBorrowed="book.isBorrowed"
       />
     </div>
@@ -25,7 +24,7 @@ export default {
     };
   },
   methods: {
-    GetBook() {
+    GetBooks() {
       fetch("/books/Getall", {
         method: "GET",
       })
@@ -38,7 +37,7 @@ export default {
     },
   },
   mounted() {
-    this.GetBook();
+    this.GetBooks();
   },
 };
 </script>
