@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TopMenu from "./components/TopMenu.vue";
+import TopMenu from "./view/TopMenu.vue";
 export default {
   components: {
     TopMenu,

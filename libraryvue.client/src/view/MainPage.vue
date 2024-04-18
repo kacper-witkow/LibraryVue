@@ -1,6 +1,6 @@
 <template>
   <br />
-  <div class="flex flex-col object-center">
+  <div class="flex w-4/5 flex-col object-center">
     <div v-for="book in books" :key="book.id">
       <BookCard
         :title="book.title"
