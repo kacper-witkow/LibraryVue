@@ -17,7 +17,7 @@ const store = createStore({
   actions: {},
   getters: {
     isLoggedIn(state) {
-      return !!state.token;
+      return !state.token;
     },
   },
 });

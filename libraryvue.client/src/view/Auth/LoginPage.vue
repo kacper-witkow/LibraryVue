@@ -60,7 +60,6 @@ export default {
   methods: {
     //   ...mapMutations(["setUser", "setToken"]),
     async Login() {
-      console.log(this.Password);
       console.log("Logowanie");
       const response = await fetch("/auth/login", {
         method: "POST",
@@ -73,9 +72,9 @@ export default {
         }),
       });
       const { user, token } = await response.json();
-      // this.setUser(user);
-      // this.setToken(token);
-      this.$router.push("/");
+      this.$store.commit("setUser", user);
+      this.$store.commit("setToken", token);
+      this.$router.push({ name: "home" });
     },
   },
   data() {

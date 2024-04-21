@@ -87,7 +87,7 @@ export default {
         }),
       });
       console.log(response.json());
-      this.$router.push("/");
+      this.$router.push({ name: "home" });
     },
   },
 };

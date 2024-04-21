@@ -4,6 +4,7 @@ import MainPage from "../view/MainPage.vue";
 import NotFound from "../view/NotFound.vue";
 import BookDetailsPage from "../view/Book/BookDetailsPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
+import text from "../view/text.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -11,6 +12,7 @@ export default createRouter({
     { path: "/", name: "home", component: MainPage },
     { path: "/login", name: "login", component: LoginPage },
     { path: "/register", name: "register", component: RegisterPage },
+    { path: "/text", name: "text", component: text },
     {
       path: "/book/:id",
       name: "book",
