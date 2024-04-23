@@ -48,8 +48,6 @@ namespace LibraryVue.Server
             logger.Debug("Init");
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-            app.UseAuthentication();
 
             app.UseCors(options =>
             options.AllowAnyOrigin()
@@ -57,10 +55,11 @@ namespace LibraryVue.Server
             .AllowAnyHeader()
             ) ;
 
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.MapControllers();
-
-            app.MapFallbackToFile("/index.html");
-
             app.Run();
         }
     }

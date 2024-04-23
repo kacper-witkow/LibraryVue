@@ -46,8 +46,8 @@ namespace LibraryVue.Server.Controllers
                     {
                         authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                     }
-
-                    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+                var JWT = _configuration["JWT:Secret"];
+                    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWT));
 
                     var token = new JwtSecurityToken(
                         issuer: _configuration["JWT:ValidIssuer"],
@@ -87,7 +87,17 @@ namespace LibraryVue.Server.Controllers
 
                 _logger.LogInformation("New account created. Name: " + model.Username.ToString());
 
-                return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+            if (await roleManager.RoleExistsAsync(UserRoles.User))
+            {
+                await userManager.AddToRoleAsync(user, UserRoles.User);
+
+                _logger.LogInformation("New User account created. Name: " + model.Username.ToString());
+            }
+
+            return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
 
             [HttpPost]

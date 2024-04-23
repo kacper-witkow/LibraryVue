@@ -26,19 +26,9 @@ export default {
       books: [],
     };
   },
-  methods: {
-    GetBooks() {
-      fetch("/books/Getall", {
-        method: "GET",
-      })
-        .then((response) => response.json().then((data) => (this.books = data)))
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-  },
+  methods: {},
   mounted() {
-    this.GetBooks();
+    this.books = this.$store.commit("GetBooks");
   },
   computed: {
     ...mapGetters(["isLoggedIn", "getUsername"]),
