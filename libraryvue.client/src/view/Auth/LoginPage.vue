@@ -71,8 +71,8 @@ export default {
           Password: this.Password,
         }),
       });
-      const { user, token } = await response.json();
-      this.$store.commit("setUser", user);
+      const { username, token, expiration } = await response.json();
+      this.$store.commit("setUser", username);
       this.$store.commit("setToken", token);
       this.$router.push({ name: "home" });
     },

@@ -6,11 +6,28 @@
       >
     </div>
     <div class="flex">
-      <router-link class="m-4 text-xl" :to="{ name: 'login' }"
-        >Log In</router-link
-      >
+      <div v-if="!isLoggedIn" class="m-4 text-xl">
+        <router-link :to="{ name: 'login' }">Log In</router-link>
+      </div>
+      <div v-else class="m-4 text-xl">
+        <router-link :to="{ name: 'home' }" @click="SingOut"
+          >Log Out</router-link
+        >
+      </div>
     </div>
   </navbar>
 </template>
 
-<script></script>
+<script>
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["isLoggedIn", "getUsername"]),
+  },
+  methods: {
+    SingOut() {
+      this.$store.commit("SingOut");
+    },
+  },
+};
+</script>

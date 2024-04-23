@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-5/6 flex-col object-center">
-    <p v-if="IsLoggedIn">hello</p>
+    <p v-if="isLoggedIn">hello {{ getUsername }}</p>
     <div v-for="book in books" :key="book.id">
       <BookCard
         :title="book.title"
@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import BookCard from "./BookCard/BookCard.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -40,9 +41,7 @@ export default {
     this.GetBooks();
   },
   computed: {
-    IsLoggedIn() {
-      return this.$store.state.token;
-    },
+    ...mapGetters(["isLoggedIn", "getUsername"]),
   },
 };
 </script>

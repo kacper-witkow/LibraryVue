@@ -8,16 +8,25 @@ const store = createStore({
   },
   mutations: {
     setUser(state, user) {
+      console.log("Set user to:" + user);
       state.user = user;
     },
     setToken(state, token) {
+      console.log("Set token to:" + token);
       state.token = token;
+    },
+    SingOut(state) {
+      state.token = null;
+      state.user = null;
     },
   },
   actions: {},
   getters: {
     isLoggedIn(state) {
-      return !state.token;
+      return state.token;
+    },
+    getUsername(state) {
+      return state.user;
     },
   },
 });
