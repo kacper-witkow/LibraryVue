@@ -18,16 +18,10 @@
   </navbar>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters(["isLoggedIn", "getUsername"]),
-  },
-  methods: {
-    SingOut() {
-      this.$store.commit("SingOut");
-    },
-  },
-};
+<script setup>
+import { useStore } from "../store/module.js";
+
+const store = useStore();
+const isLoggedIn = store.isLoggedIn;
+const SingOut = store.SingOut();
 </script>
