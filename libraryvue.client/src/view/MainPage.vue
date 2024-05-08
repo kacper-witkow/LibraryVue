@@ -1,12 +1,12 @@
 <template>
   <div class="flex w-5/6 flex-col object-center">
-    <div v-for="book in books" :key="book.id">
+    <div v-for="book in books" :key="book['id']">
       <BookCard
-        :title="book.title"
-        :author="book.author"
-        :numberOfPages="book.numberOfPages"
-        :isBorrowed="book.isBorrowed"
-        :id="book.id"
+        :title="book['title']"
+        :author="book['author']"
+        :numberOfPages="book['numberOfPages']"
+        :isBorrowed="book['isBorrowed']"
+        :id="book['id']"
       />
     </div>
   </div>
