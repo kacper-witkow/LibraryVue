@@ -37,7 +37,7 @@
     </form>
   </CardWrapper>
 </template>
-<script>
+<script setup>
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -49,46 +49,31 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CardWrapper from "./CardWrapper.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-export default {
-  components: {
-    Button,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-    Input,
-    CardWrapper,
-  },
-  data() {
-    return {
-      Email: "",
-      Username: "",
-      Password: "",
-      title: "Register",
-      backHrefText: "You already have account?",
-      backHrefLink: "./login",
-    };
-  },
-  methods: {
-    async Register() {
-      console.log("Rejestrowanie");
-      const response = await fetch("/auth/Register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Username: this.Username,
-          Email: this.Email,
-          Password: this.Password,
-        }),
-      });
-      console.log(response.json());
-      this.$router.push({ name: "home" });
+const router = useRouter();
+async function Register() {
+  console.log("Rejestrowanie");
+  const response = await fetch("/auth/Register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  },
-};
+    body: JSON.stringify({
+      Username: Username.value,
+      Email: Email.value,
+      Password: Password.value,
+    }),
+  });
+  console.log(response.json());
+  router.push({ name: "home" });
+}
+
+const Email = ref("");
+const Username = ref("");
+const Password = ref("");
+const title = "Register";
+const backHrefText = "You already have account?";
+const backHrefLink = "./login";
 </script>

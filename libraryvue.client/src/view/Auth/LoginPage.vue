@@ -28,11 +28,7 @@
   </CardWrapper>
 </template>
 
-<script lang="ts">
-import { useForm } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
-import * as z from "zod";
-
+<script setup>
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -44,47 +40,77 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CardWrapper from "./CardWrapper.vue";
+import { ref } from "vue";
+import { useAuthStore } from "@/store/module.js";
+import { useRouter } from "vue-router";
 
-export default {
-  components: {
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-    CardWrapper,
-    Input,
-    Button,
-  },
-  methods: {
-    //   ...mapMutations(["setUser", "setToken"]),
-    async Login() {
-      console.log("Logowanie");
-      const response = await fetch("/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Email: this.Email,
-          Password: this.Password,
-        }),
-      });
-      const { username, token, expiration } = await response.json();
-      this.$store.commit("setUser", username);
-      this.$store.commit("setToken", token);
-      this.$router.push({ name: "home" });
+const storeAuth = useAuthStore();
+const router = useRouter();
+
+async function Login() {
+  console.log("Logowanie");
+  const response = await fetch("/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  },
-  data() {
-    return {
-      Password: "",
-      Email: "",
-      title: "Log in",
-      backHrefLink: "./register",
-      backHrefText: "You don't have account?",
-    };
-  },
-};
+    body: JSON.stringify({
+      Email: Email.value,
+      Password: Password.value,
+    }),
+  });
+  const { username, token, expiration } = await response.json();
+  console.log(username, token);
+  storeAuth.setUser(username);
+  storeAuth.setToken(token);
+  await router.push({ name: "home" });
+}
+
+const Password = ref("");
+const Email = ref("");
+const title = "Log in";
+const backHrefLink = "./register";
+const backHrefText = "You don't have account?";
+
+// export default {
+//   components: {
+//     FormControl,
+//     FormDescription,
+//     FormField,
+//     FormItem,
+//     FormLabel,
+//     FormMessage,
+//     CardWrapper,
+//     Input,
+//     Button,
+//   },
+//   methods: {
+//     async Login() {
+//       console.log("Logowanie");
+//       const response = await fetch("/auth/login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           Email: this.Email,
+//           Password: this.Password,
+//         }),
+//       });
+//       const { username, token, expiration } = await response.json();
+//       this.$store.commit("setUser", username);
+//       this.$store.commit("setToken", token);
+//       this.$router.push({ name: "home" });
+//     },
+//   },
+//   data() {
+//     return {
+//       Password: "",
+//       Email: "",
+//       title: "Log in",
+//       backHrefLink: "./register",
+//       backHrefText: "You don't have account?",
+//     };
+//   },
+// };
 </script>

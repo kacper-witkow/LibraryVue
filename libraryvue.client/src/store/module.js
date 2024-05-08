@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 // Create a new store instance.
-export const useStore = defineStore("user", {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     token: null,
@@ -20,8 +20,5 @@ export const useStore = defineStore("user", {
       this.user = null;
     },
   },
-  getters: {
-    isLoggedIn: () => this.token != null,
-    getUsername: () => this.user,
-  },
+  persist: true,
 });

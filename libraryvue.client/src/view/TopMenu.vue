@@ -19,9 +19,13 @@
 </template>
 
 <script setup>
-import { useStore } from "../store/module.js";
+import { useAuthStore } from "../store/module.js";
+import { computed, watch } from "vue";
 
-const store = useStore();
-const isLoggedIn = store.isLoggedIn;
-const SingOut = store.SingOut();
+const user = useAuthStore();
+const isLoggedIn = computed(() => !!user?.token);
+
+function SingOut() {
+  user.SingOut();
+}
 </script>
