@@ -31,4 +31,5 @@ RUN dotnet publish "./LibraryVue.Server.csproj" -c $BUILD_CONFIGURATION -o /app/
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+WORKDIR /app/publish
 ENTRYPOINT ["dotnet", "LibraryVue.Server.dll"]
