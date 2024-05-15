@@ -40,3 +40,14 @@ services:
     - ./.containers/books-database:/var/opt/mssql/data
     networks:
     - libraryapi
+    
+  libraryvue.database.users:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: libraryvue.database.users
+    environment:
+    - ACCEPT_EULA=Y
+    - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+    - 1433:1434
+    networks:
+    - libraryapi

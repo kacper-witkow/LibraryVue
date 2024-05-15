@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
+using System;
+using System.Diagnostics.Metrics;
 using System.Text;
 
 namespace Library.Server.Services
@@ -20,19 +22,13 @@ namespace Library.Server.Services
         {
 
             // Database
-            if (environment.IsDevelopment())
-            {
-                services.AddDbContext<BooksDbContext>(options =>
-                options.UseSqlServer("Data Source=DESKTOP-74V2UDI;Initial Catalog=Library;Integrated Security=True;Encrypt=False")
-                );
-
-            }
-            else
-            {
-                services.AddDbContext<BooksDbContext>(options =>
+            
+            services.AddDbContext<BooksDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("BookDB"))
                 );
-            }
+            services.AddDbContext<UsersDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UserDB"))
+                );
 
 
             services.AddScoped<IBookDatabaseService, BookDatabaseService>();

@@ -43,10 +43,8 @@ import CardWrapper from "./CardWrapper.vue";
 import { ref } from "vue";
 import { useAuthStore } from "@/store/module.js";
 import { useRouter } from "vue-router";
-
 const storeAuth = useAuthStore();
 const router = useRouter();
-
 async function Login() {
   console.log("Logowanie");
   const response = await fetch("/auth/login", {

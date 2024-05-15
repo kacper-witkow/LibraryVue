@@ -16,9 +16,6 @@ namespace Bibliotekarz.Server.Data.Context
         public DbSet<BookDto> Books { get; set; }
 
         public BooksDbContext(DbContextOptions<BooksDbContext> dbContextOptions) : base(dbContextOptions) { }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-        }
+        
     }
 }
