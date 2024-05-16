@@ -41,7 +41,7 @@ services:
     container_name: libraryvue.database.users
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Passw0rd!1
+      - MSSQL_SA_PASSWORD=Passw0rd!
     ports:
       - 1434:1433
     networks:
