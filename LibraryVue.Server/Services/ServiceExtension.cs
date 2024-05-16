@@ -30,6 +30,9 @@ namespace Library.Server.Services
                 options.UseSqlServer(Configuration.GetConnectionString("UserDB"))
                 );
 
+            var cos = Configuration.GetConnectionString("BookDB");
+            cos = Configuration.GetConnectionString("UserDB");
+
 
             services.AddScoped<IBookDatabaseService, BookDatabaseService>();
 

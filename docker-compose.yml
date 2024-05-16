@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 networks:
   libraryapi:
@@ -10,11 +10,11 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-    - '8080:8080'
-    - '8081:8081'
+      - 8080:8080
+      - 8081:8081
     container_name: libraryvue.api
-    networks: 
-        - libraryapi
+    networks:
+      - libraryapi
     volumes:
       - ~/.aspnet/https:/https:ro
       - ./.containers/logs:/log
@@ -24,28 +24,25 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-    entrypoint: ["dotnet", "LibraryVue.Server.dll"]
 
   libraryvue.database.books:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: libraryvue.database.books
     environment:
-    - ACCEPT_EULA=Y
-    - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Passw0rd!
     ports:
-    - 1433:1433
-    volumes:
-    - ./.containers/books-database:/var/opt/mssql/data
+      - 1433:1433
     networks:
-    - libraryapi
-    
+      - libraryapi
+
   libraryvue.database.users:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: libraryvue.database.users
     environment:
-    - ACCEPT_EULA=Y
-    - MSSQL_SA_PASSWORD=YourStrong@Passw0rd
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Passw0rd!1
     ports:
-    - 1434:1433
+      - 1434:1433
     networks:
-    - libraryapi
+      - libraryapi
