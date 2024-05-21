@@ -1,5 +1,7 @@
 <template>
   <div class="flex w-5/6 flex-col object-center">
+    <h1 class="text-center text-3xl">Welcome in our library</h1>
+    <h1 v-if(isLogin) class="text-center text-3xl">Hi {{ store.user }}</h1>
     <div v-for="book in books" :key="book['id']">
       <BookCard
         :title="book['title']"
@@ -12,31 +14,21 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
+import { watch, ref } from "vue";
 import BookCard from "./BookCard/BookCard.vue";
+import useAuthStore from "@/store/module.js";
+const store = useAuthStore();
+const books = ref(null);
 
-export default {
-  components: {
-    BookCard,
+watch(
+  books,
+  async () => {
+    const response = await fetch("/books/Getall", {
+      method: "GET",
+    });
+    books.value = await response.json();
   },
-  data() {
-    return {
-      books: [],
-    };
-  },
-  methods: {
-    GetBooks() {
-      fetch("/books/Getall", {
-        method: "GET",
-      })
-        .then((response) => response.json().then((data) => (this.books = data)))
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-  },
-  mounted() {
-    this.GetBooks();
-  },
-};
+  { immediate: true },
+);
 </script>

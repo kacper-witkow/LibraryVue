@@ -25,24 +25,13 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
 
-  libraryvue.database.books:
+  libraryvue.database:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: libraryvue.database.books
+    container_name: libraryvue.database
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Passw0rd!
     ports:
       - 1433:1433
-    networks:
-      - libraryapi
-
-  libraryvue.database.users:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: libraryvue.database.users
-    environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=Passw0rd!
-    ports:
-      - 1434:1433
     networks:
       - libraryapi
