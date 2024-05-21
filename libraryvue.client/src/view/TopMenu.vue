@@ -11,7 +11,7 @@
       >
     </div>
     <div class="flex">
-      <div v-if="!isLogin" class="m-4 text-xl">
+      <div v-if="!store.isLogin" class="m-4 text-xl">
         <router-link :to="{ name: 'login' }">Log In</router-link>
       </div>
       <div v-else class="m-4 text-xl">
@@ -27,10 +27,9 @@
 import { useAuthStore } from "../store/module.js";
 import { computed, watch } from "vue";
 
-const user = useAuthStore();
-const isLogin = computed(() => !!user?.token);
+const store = useAuthStore();
 
 function SingOut() {
-  user.SingOut();
+  store.SingOut();
 }
 </script>

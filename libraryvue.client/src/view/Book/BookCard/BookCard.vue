@@ -1,7 +1,7 @@
 <template>
-  <div class="m-3 flex w-full">
+  <div class="m-3 flex w-full justify-center">
     <div
-      class="flex h-auto justify-between rounded-sm border-2 bg-sky-200 p-3 text-lg"
+      class="flex h-auto w-full justify-between rounded-sm border-2 bg-sky-200 p-3 text-lg"
     >
       <div class="flex">
         <p class="flex p-1">{{ title }}</p>
@@ -32,7 +32,9 @@ const props = defineProps([
 ]);
 
 import useAuthStore from "@/store/module.js";
+import { useRouter } from "vue-router";
 const store = useAuthStore();
+const router = useRouter();
 
 async function BorrowBook(id) {
   await fetch("/books/borrowBook/" + props.id, {
@@ -40,5 +42,6 @@ async function BorrowBook(id) {
     credentials: "same-origin",
     headers: { Authorization: "Bearer " + store.token },
   });
+  router.push("/");
 }
 </script>

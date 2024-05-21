@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <div class="flex w-5/6 flex-col object-center">
+  <div class="mt-3">
+    <div class="flex w-full flex-col object-center">
       <h1 class="text-center text-3xl">Welcome in our library</h1>
-      <h1 v-if(isLogin) class="text-center text-3xl">Hi {{ store.user }}</h1>
+      <h1 v-if(isLogin) class="mt-3 text-center text-3xl">
+        Below you can choose book you want to borrow
+      </h1>
+      <p v-if="book == null" class="mt-20 text-center text-5xl">
+        Sorry no more books to borrow
+      </p>
       <div v-for="book in books" :key="book['id']">
         <BookCard
           :title="book['title']"

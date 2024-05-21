@@ -11,7 +11,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", name: "home", component: MainPage },
-    { path: "/", name: "OpenLibrary", component: OpenLibrary },
+    { path: "/OpenLibrary", name: "OpenLibrary", component: OpenLibrary },
     { path: "/login", name: "login", component: LoginPage },
     { path: "/register", name: "register", component: RegisterPage },
     { path: "/text", name: "text", component: text },
