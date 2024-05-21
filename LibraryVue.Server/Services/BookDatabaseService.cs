@@ -42,11 +42,40 @@ namespace Library.Server.Services
                 books);
             return result;
         }
+        public async Task<IEnumerable<Book>> GetUserBooks(string userName)
+        {
+            IEnumerable<BookDto> books = await _dbContext.Books.Where(b=>b.IsBorrowed && b.UserName==userName).ToListAsync();
+
+            // Fetching related data for borrowed books using explicit loading
+
+            IEnumerable<Book> result = _mapper.Map<IEnumerable<Book>>(
+                books);
+            return result;
+        }
+        public async Task<IEnumerable<Book>> GetAllAvailableBooks()
+        {
+            IEnumerable<BookDto> books = await _dbContext.Books.Where(b => !b.IsBorrowed).ToListAsync();
+
+            // Fetching related data for borrowed books using explicit loading
+
+            IEnumerable<Book> result = _mapper.Map<IEnumerable<Book>>(
+                books);
+            return result;
+        }
 
         public async Task<int> PostBook(Book book)
         {
             await _dbContext.Books.AddAsync(_mapper.Map<BookDto>(book));
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async void UpdateBooksOwner(string userName,int bookId)
+        {
+            BookDto book = _dbContext.Books.FirstOrDefault(b=>b.Id==bookId);
+            book.UserName = userName;
+            book.IsBorrowed = true;
+            _dbContext.Books.Update(book);
+            _dbContext.SaveChanges();
         }
     }
 
@@ -54,6 +83,9 @@ namespace Library.Server.Services
     {
         public Task<Book> GetBook(int id);
         public Task<IEnumerable<Book>> GetBooks();
+        public Task<IEnumerable<Book>> GetAllAvailableBooks();
+        public Task<IEnumerable<Book>> GetUserBooks(string userName); 
+        public void UpdateBooksOwner(string userName, int bookId);
         public void DeleteBook(int id);
         public Task<int> PostBook(Book book);
 

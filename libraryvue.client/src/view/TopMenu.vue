@@ -6,7 +6,12 @@
       >
     </div>
     <div class="flex">
-      <div v-if="!isLoggedIn" class="m-4 text-xl">
+      <routerLink class="m-4 text-2xl" :to="{ name: 'OpenLibrary' }"
+        >Open Library</routerLink
+      >
+    </div>
+    <div class="flex">
+      <div v-if="!isLogin" class="m-4 text-xl">
         <router-link :to="{ name: 'login' }">Log In</router-link>
       </div>
       <div v-else class="m-4 text-xl">
@@ -23,7 +28,7 @@ import { useAuthStore } from "../store/module.js";
 import { computed, watch } from "vue";
 
 const user = useAuthStore();
-const isLoggedIn = computed(() => !!user?.token);
+const isLogin = computed(() => !!user?.token);
 
 function SingOut() {
   user.SingOut();

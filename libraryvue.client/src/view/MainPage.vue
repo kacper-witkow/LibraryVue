@@ -15,13 +15,13 @@
 </template>
 
 <script setup>
-import { watch, ref, onMounted } from "vue";
+import { watch, computed, ref, onMounted } from "vue";
 import BookCard from "./Book/BookCard/BookCard.vue";
 import useAuthStore from "@/store/module.js";
 const store = useAuthStore();
 const books = ref(null);
 
-const isLogin = store.user != null;
+const isLogin = ref(computed(() => !!user?.token));
 
 onMounted(async () => {
   console.log(store.token);

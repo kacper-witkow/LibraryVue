@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
+using System.Collections.Generic;
 
 namespace Library.Server.Controllers
 {
@@ -51,9 +52,27 @@ namespace Library.Server.Controllers
                 _logger.LogWarning("User is not in the required role.");
                 return Unauthorized("User does not have the required role.");
             }
-            _logger.LogInformation("Authorize books.");
-            var result = await _databaseService.GetBooks();
-            return Ok(result);
+            IEnumerable<Book> books = await _databaseService.GetUserBooks(User.Identity.Name);
+            return Ok(books);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAllAvailableBooks()
+        {
+            IEnumerable<Book> books = await _databaseService.GetAllAvailableBooks();
+            return Ok(books);
+        }
+
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> borrowBook(int Id)
+        {
+            if (User.IsInRole(UserRoles.Admin))
+            {
+                return Unauthorized("Admin cannot borrow books");
+            }
+            
+            _databaseService.UpdateBooksOwner(User.Identity.Name,Id);
+            return Ok();
         }
         [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> Get(int Id)
