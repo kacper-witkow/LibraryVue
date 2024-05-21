@@ -39,25 +39,26 @@ namespace Library.Server.Services
             services.AddDbContext<UsersDbContext>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<UsersDbContext>();
+                .AddEntityFrameworkStores<UsersDbContext>()
+                .AddDefaultTokenProviders();
 
             // Adding Authentication
             services.
-            AddAuthentication(options =>
-            {
+            AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+            .AddJwtBearer(options =>
              {
                  options.TokenValidationParameters = new TokenValidationParameters
                  {
                      ValidAudience = Configuration["JWT:ValidAudience"],
                      ValidIssuer = Configuration["JWT:ValidIssuer"],
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
-                     ValidateIssuer= true,
-                     ValidateAudience= true,
-                     ValidateIssuerSigningKey= true,
-                     ValidateLifetime=true,
+                     ValidateIssuer= false,
+                     ValidateAudience= false,
+                     ValidateIssuerSigningKey= false,
+                     ValidateLifetime= false,
                  };
              });
             services.Configure<IdentityOptions>(options =>
@@ -79,6 +80,10 @@ namespace Library.Server.Services
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(UserRoles.User, policy => policy.RequireRole(UserRoles.User));
             });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

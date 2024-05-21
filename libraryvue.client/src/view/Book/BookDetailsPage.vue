@@ -1,40 +1,23 @@
 <template>
-  <div v-if="this.book">
+  <div class="mt-4 text-center text-3xl">
     <h1>
-      {{ this.book.title }}
+      {{ book.title }}
     </h1>
-    hej
     <h2>
-      {{ this.book.author }}
+      {{ book.author }}
     </h2>
   </div>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      book: null,
-      //we get Id as a prop
-      //id: this.$route.params.id,
-    };
-  },
-  props: ["id"],
-  methods: {
-    async GetBook() {
-      console.log("Download book" + this.id);
-      fetch("/books/Get/" + this.id, {
-        method: "GET",
-      })
-        .then((response) =>
-          response.json().then((data) => console.log((this.book = data))),
-        )
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-  },
-  mounted() {
-    this.GetBook();
-  },
-};
+<script setup>
+import { watch, ref, onMounted } from "vue";
+const props = defineProps(["id", "author", "title"]);
+
+const book = ref(null);
+
+onMounted(async () => {
+  const response = await fetch("/books/Get/" + props.id, {
+    method: "GET",
+  });
+  book.value = await response.json();
+});
 </script>

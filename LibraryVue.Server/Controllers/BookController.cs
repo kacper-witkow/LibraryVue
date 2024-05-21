@@ -16,10 +16,14 @@ namespace Library.Server.Controllers
 
         private readonly ILogger<BookController> _logger;
         private readonly IBookDatabaseService _databaseService;
-        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _logger = logger;
             _databaseService = databaseService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -40,6 +44,13 @@ namespace Library.Server.Controllers
         [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
+            _logger.LogInformation("Entering GetAllAuth method.");
+
+            if (!User.IsInRole(UserRoles.User))
+            {
+                _logger.LogWarning("User is not in the required role.");
+                return Unauthorized("User does not have the required role.");
+            }
             _logger.LogInformation("Authorize books.");
             var result = await _databaseService.GetBooks();
             return Ok(result);

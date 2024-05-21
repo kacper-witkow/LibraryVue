@@ -15,20 +15,21 @@
 </template>
 
 <script setup>
-import { watch, ref } from "vue";
-import BookCard from "./BookCard/BookCard.vue";
+import { watch, ref, onMounted } from "vue";
+import BookCard from "./Book/BookCard/BookCard.vue";
 import useAuthStore from "@/store/module.js";
 const store = useAuthStore();
 const books = ref(null);
 
-watch(
-  books,
-  async () => {
-    const response = await fetch("/books/Getall", {
-      method: "GET",
-    });
-    books.value = await response.json();
-  },
-  { immediate: true },
-);
+const isLogin = store.user != null;
+
+onMounted(async () => {
+  console.log(store.token);
+  const response = await fetch("/books/GetAllAuth", {
+    method: "GET",
+    credentials: "same-origin",
+    headers: { Authorization: "Bearer " + store.token },
+  });
+  books.value = await response.json();
+});
 </script>

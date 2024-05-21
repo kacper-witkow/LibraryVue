@@ -1,6 +1,12 @@
 <template>
   <div class="m-3 flex w-full">
-    <router-link class="w-full" :to="{ name: 'book', params: { id: this.id } }">
+    <router-link
+      class="w-full"
+      :to="{
+        name: 'book',
+        params: { id: id, author: author, title: title },
+      }"
+    >
       <div
         class="flex h-auto justify-between rounded-sm border-2 bg-sky-200 p-3 text-lg"
       >
