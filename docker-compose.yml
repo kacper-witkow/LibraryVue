@@ -19,7 +19,6 @@ services:
       - ~/.aspnet/https:/https:ro
       - ./.containers/logs:/log
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password

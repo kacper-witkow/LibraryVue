@@ -365,3 +365,4 @@ FodyWeavers.xsd
 #containers
 .bin
 *.bin
+.DS_Store
