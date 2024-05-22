@@ -130,6 +130,51 @@ namespace LibraryVue.Server.Controllers
 
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
+            [HttpGet("[action]")]
+            public async Task<IActionResult> AdminLogin([FromBody] LoginModel model)
+            {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+                {
+                    var userRoles = await userManager.GetRolesAsync(user);
+                    if (userRoles is not null && userRoles.Contains(UserRoles.Admin))
+                    {
+                    var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+                    foreach (var userRole in userRoles)
+                    {
+                        authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                    }
+                var JWT = _configuration["JWT:Secret"];
+                    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWT));
+
+                    var token = new JwtSecurityToken(
+                        issuer: _configuration["JWT:ValidIssuer"],
+                        audience: _configuration["JWT:ValidAudience"],
+                        expires: DateTime.Now.AddHours(3),
+                        claims: authClaims,
+                        signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                        );
+
+                    return Ok(new
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        username = user.UserName,
+                        expiration = token.ValidTo,
+                        isAdmin = true
+                    });
+                    }
+                    else{
+                        return Unauthorized();
+                    }
+                }
+                return Unauthorized();
+            }
+            
         }
     
 }

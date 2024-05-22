@@ -5,6 +5,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     token: null,
+    isAdmin: false,
   }),
   actions: {
     setUser(user) {
@@ -14,6 +15,10 @@ export const useAuthStore = defineStore("auth", {
     setToken(token) {
       console.log("Set token to:" + token);
       this.token = token;
+    },
+    setAdmin() {
+      console.log("Admin set");
+      this.isAdmin = true;
     },
     SingOut() {
       this.token = "";

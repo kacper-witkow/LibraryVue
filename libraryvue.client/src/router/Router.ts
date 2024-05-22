@@ -1,4 +1,5 @@
 import LoginPage from "../view/Auth/LoginPage.vue";
+import LoginPageAdmin from "../view/Auth/LoginPageAdmin.vue";
 import RegisterPage from "../view/Auth/RegisterPage.vue";
 import MainPage from "../view/MainPage.vue";
 import OpenLibrary from "../view/OpenLibrary.vue";
@@ -13,6 +14,7 @@ export default createRouter({
     { path: "/", name: "home", component: MainPage },
     { path: "/OpenLibrary", name: "OpenLibrary", component: OpenLibrary },
     { path: "/login", name: "login", component: LoginPage },
+    { path: "/AdminLogin", name: "AdminLogin", component: LoginPageAdmin },
     { path: "/register", name: "register", component: RegisterPage },
     { path: "/text", name: "text", component: text },
     {

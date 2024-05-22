@@ -88,8 +88,9 @@ namespace Library.Server.Controllers
             }
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> Post([FromBody] Book book)
+        public async Task<IActionResult> CreateBook([FromBody] Book book)
         {
+            if(book != null)
             await _databaseService.PostBook(book);
             return Created();
         }
