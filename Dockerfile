@@ -14,7 +14,7 @@ RUN apt-get install -y curl
 RUN apt-get install -y libpng-dev libjpeg-dev curl libxi6 build-essential libgl1-mesa-glx
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get install -y nodejs
-ARG BUILD_CONFIGURATION=Debug
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["libraryvue.client/nuget.config", "libraryvue.client/"]
 COPY ["LibraryVue.Server/LibraryVue.Server.csproj", "LibraryVue.Server/"]

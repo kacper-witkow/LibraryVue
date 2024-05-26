@@ -6,7 +6,7 @@
     <CardContent class="w-2/3">
       <slot></slot>
     </CardContent>
-    <CardFooter v-if="!backHrefText">
+    <CardFooter v-if="backHrefText">
       <RouterLink :to="backHrefLink">{{ backHrefText }}</RouterLink>
     </CardFooter>
   </Card>

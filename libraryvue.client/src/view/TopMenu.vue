@@ -5,7 +5,7 @@
         >Library</routerLink
       >
     </div>
-    <div v-if="!store.isLogin" class="flex">
+    <div v-if="store.isLogin" class="flex">
       <routerLink class="m-4 text-2xl" :to="{ name: 'OpenLibrary' }"
         >Open Library</routerLink
       >

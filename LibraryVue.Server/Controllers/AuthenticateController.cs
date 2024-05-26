@@ -130,7 +130,7 @@ namespace LibraryVue.Server.Controllers
 
                 return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
-            [HttpGet("[action]")]
+            [HttpPost("[action]")]
             public async Task<IActionResult> AdminLogin([FromBody] LoginModel model)
             {
                 var user = await userManager.FindByEmailAsync(model.Email);

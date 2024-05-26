@@ -10,7 +10,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
   : env.ASPNETCORE_URLS
     ? env.ASPNETCORE_URLS.split(";")[0]
-    : "https://localhost:7021";
+    : "https://localhost:8081";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,20 +28,20 @@ export default defineConfig({
   server: {
     proxy: {
       "/books": {
-        target: "https://localhost:7021/api/Book",
+        target: "https://localhost:8081/api/Book",
         changeOrigin: true,
         secure: false,
         ws: true,
         rewrite: (path) => path.replace(/^\/books/, ""),
       },
       "/auth": {
-        target: "https://localhost:7021/Api/Authenticate",
+        target: "https://localhost:8081/Api/Authenticate",
         changeOrigin: true,
         secure: false,
         ws: true,
         rewrite: (path) => path.replace(/^\/auth/, ""),
       },
     },
-    port: 5173,
+    port: 5137,
   },
 });

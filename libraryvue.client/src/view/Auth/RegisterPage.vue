@@ -55,7 +55,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 async function Register() {
   console.log("Rejestrowanie");
-  const response = await fetch("/auth/Register", {
+  const response = await fetch("/auth/register-admin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
