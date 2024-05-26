@@ -17,5 +17,6 @@ public class BookDto
     public int NumberOfPages { get; set; }
     public bool IsBorrowed { get; set; }
     public string UserName { get; set; }
+    public string FileName { get; set; }
 
 }

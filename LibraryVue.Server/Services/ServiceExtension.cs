@@ -2,6 +2,7 @@
 using Bibliotekarz.Server.Services;
 using Library.Server.Databases.Contexts;
 using LibraryVue.Server.Models.Auth;
+using LibraryVue.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -90,6 +91,7 @@ namespace Library.Server.Services
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            services.AddScoped<IServerFileService,ServerFileService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

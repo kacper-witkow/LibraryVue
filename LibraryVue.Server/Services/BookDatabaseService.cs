@@ -63,9 +63,12 @@ namespace Library.Server.Services
             return result;
         }
 
-        public async Task<int> PostBook(Book book)
+        public async Task<int> PostBook(Book book,string fielName)
         {
-            await _dbContext.Books.AddAsync(_mapper.Map<BookDto>(book));
+            BookDto dto = new BookDto();
+            dto = _mapper.Map<BookDto>(book);
+            dto.FileName = fielName;
+            await _dbContext.Books.AddAsync(dto);
             return await _dbContext.SaveChangesAsync();
         }
 
@@ -87,7 +90,7 @@ namespace Library.Server.Services
         public Task<IEnumerable<Book>> GetUserBooks(string userName); 
         public void UpdateBooksOwner(string userName, int bookId);
         public void DeleteBook(int id);
-        public Task<int> PostBook(Book book);
+        public Task<int> PostBook(Book book, string fielName);
 
 
     }

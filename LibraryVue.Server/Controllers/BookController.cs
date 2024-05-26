@@ -1,6 +1,7 @@
 ﻿using Bibliotekarz.Shared.Model;
 using Library.Server.Services;
 using LibraryVue.Server.Models.Auth;
+using LibraryVue.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,15 @@ namespace Library.Server.Controllers
         private readonly ILogger<BookController> _logger;
         private readonly IBookDatabaseService _databaseService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly SignInManager<ApplicationUser> _signInManager; 
+        private readonly ServerFileService _serverFileServicer;
+        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ServerFileService serverFileServicer)
         {
             _logger = logger;
             _databaseService = databaseService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _serverFileServicer = serverFileServicer;
         }
 
 
@@ -88,11 +91,20 @@ namespace Library.Server.Controllers
             }
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateBook([FromBody] Book book)
+        public async Task<IActionResult> CreateBook([FromForm] IFormFile file, [FromBody] Book book)
         {
-            if(book != null)
-            await _databaseService.PostBook(book);
-            return Created();
+            if (book != null)
+            {
+
+                string fileName = await _serverFileServicer.SaveFile(file);
+
+                if (fileName is not null)
+                {
+                    await _databaseService.PostBook(book, fileName);
+                    return Created();
+                }
+            }
+            return BadRequest();
         }
 
         [HttpDelete("[action]/{id}")]
