@@ -46,6 +46,7 @@ import { useRouter } from "vue-router";
 const storeAuth = useAuthStore();
 const router = useRouter();
 const errorLogin = ref(null);
+
 async function Login() {
   console.log("Logowanie");
   const response = await fetch("/auth/login", {

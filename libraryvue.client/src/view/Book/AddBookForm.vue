@@ -1,7 +1,7 @@
 <template>
   <Form
-    class="absolute h-full w-5/6 bg-slate-600 p-3 text-white"
-    @submit.prevent="AddBook"
+    class="absolute h-full w-5/6 bg-slate-600 p-3 text-black"
+    @submit="AddBook"
   >
     <FormField name="BookAddingForm">
       <FormLabel>Add new book</FormLabel>
@@ -29,7 +29,7 @@
       <FormItem>
         <FormLabel>Source</FormLabel>
         <FormControl>
-          <Input type="file" v-model="file" />
+          <Input type="file" @change="uploadFile" />
         </FormControl>
       </FormItem>
     </FormField>
@@ -48,20 +48,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios, * as others from "axios";
+import { ref } from "vue";
+
+const file = ref(null);
+const uploadFile = (event) => {
+  file.value = event.target.files[0];
+};
 
 async function AddBook() {
-  console.log("Adding book");
-  const response = await fetch("/books/CreateBook", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  let data = new FormData();
+  let config = {
+    header: {
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify({
-      Author: Author.value,
-      Title: Title.value,
-      NumberOfPages: NumberOfPages.value,
-    }),
-  });
+  };
+  data.append("file", file.value);
+  console.log("Adding book");
+  const response = await axios.post("/books/CreateBook", data, config);
   console.log("Book: " + Title.value + " Added");
 }
 </script>
