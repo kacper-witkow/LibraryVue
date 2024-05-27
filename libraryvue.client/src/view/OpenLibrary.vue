@@ -4,8 +4,13 @@
     <div class="flex w-full flex-col object-center">
       <h1 class="text-center text-3xl">Welcome in our library</h1>
       <div v-if="store.isLogin">
-        <div v-if="store.isAdmin">
-          <button @click="AddingForm = true">Add new Book</button>
+        <div v-if="store.isAdmin" class="content-center">
+          <button
+            class="w-full bg-green-200 text-2xl text-blue-600"
+            @click="AddingForm = true"
+          >
+            Add new Book
+          </button>
         </div>
         <h1 class="mt-3 text-center text-3xl">
           Below you can choose book you want to borrow

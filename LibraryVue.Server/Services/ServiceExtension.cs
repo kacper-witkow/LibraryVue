@@ -1,5 +1,6 @@
 ﻿using Bibliotekarz.Server.Data.Context;
 using Bibliotekarz.Server.Services;
+using Library.Server.Controllers;
 using Library.Server.Databases.Contexts;
 using LibraryVue.Server.Models.Auth;
 using LibraryVue.Server.Services;
@@ -42,6 +43,9 @@ namespace Library.Server.Services
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<UsersDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IServerFileService, ServerFileService>();
+
 
             // Adding Authentication
             services.
@@ -91,7 +95,6 @@ namespace Library.Server.Services
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddScoped<IServerFileService,ServerFileService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -20,8 +20,8 @@ namespace Library.Server.Controllers
         private readonly IBookDatabaseService _databaseService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager; 
-        private readonly ServerFileService _serverFileServicer;
-        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ServerFileService serverFileServicer)
+        private readonly IServerFileService _serverFileServicer;
+        public BookController(IBookDatabaseService databaseService, ILogger<BookController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IServerFileService serverFileServicer)
         {
             _logger = logger;
             _databaseService = databaseService;
@@ -91,18 +91,19 @@ namespace Library.Server.Controllers
             }
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateBook([FromForm] IFormFile file, [FromBody] Book book)
+        public async Task<IActionResult> CreateBook(IFormFile file)//, [FromBody] Book book)
         {
-            if (book != null)
+            if (file != null)
             {
 
                 string fileName = await _serverFileServicer.SaveFile(file);
-
+                /*
                 if (fileName is not null)
                 {
                     await _databaseService.PostBook(book, fileName);
                     return Created();
                 }
+                */
             }
             return BadRequest();
         }

@@ -20,11 +20,11 @@
           <FormControl>
             <Input type="password" placeholder="Password" v-model="Password" />
           </FormControl>
-          <FormMessage />
         </FormItem>
       </FormField>
       <Button type="submit"> Log In </Button>
     </form>
+    <p class="text-red-600">{{ errorLogin }}</p>
   </CardWrapper>
 </template>
 
@@ -45,6 +45,7 @@ import { useAuthStore } from "@/store/module.js";
 import { useRouter } from "vue-router";
 const storeAuth = useAuthStore();
 const router = useRouter();
+const errorLogin = ref(null);
 async function Login() {
   console.log("Logowanie");
   const response = await fetch("/auth/login", {
@@ -57,11 +58,16 @@ async function Login() {
       Password: Password.value,
     }),
   });
-  const { username, token, expiration } = await response.json();
-  console.log(username, token);
-  storeAuth.setUser(username);
-  storeAuth.setToken(token);
-  await router.push({ name: "home" });
+  if (response.status === 400 || response.status === 401)
+    errorLogin.value = "Wrong email or password ";
+  else {
+    console.log(response.status);
+    const { username, token, expiration } = await response.json();
+    console.log(username, token);
+    storeAuth.setUser(username);
+    storeAuth.setToken(token);
+    await router.push({ name: "home" });
+  }
 }
 
 const Password = ref("");
