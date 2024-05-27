@@ -15,7 +15,7 @@
         <h1 class="mt-3 text-center text-3xl">
           Below you can choose book you want to borrow
         </h1>
-        <p v-if="book == null" class="mt-20 text-center text-5xl">
+        <p v-if="books[0] == null" class="mt-20 text-center text-5xl">
           Sorry no more books to borrow
         </p>
         <div v-for="book in books" :key="book['id']">

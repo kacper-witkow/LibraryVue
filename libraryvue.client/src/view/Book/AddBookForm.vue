@@ -15,7 +15,7 @@
       <FormItem>
         <FormLabel>Author</FormLabel>
         <FormControl>
-          <Input type="text" placeholder="Author" v-model="Author" />
+          <Input type="text" placeholder="Author" v-model="author" />
         </FormControl>
       </FormItem>
 
@@ -52,6 +52,9 @@ import axios, * as others from "axios";
 import { ref } from "vue";
 
 const file = ref(null);
+const author = ref(null);
+const title = ref(null);
+const numberOfPages = ref(null);
 const uploadFile = (event) => {
   file.value = event.target.files[0];
 };
@@ -64,6 +67,9 @@ async function AddBook() {
     },
   };
   data.append("file", file.value);
+  data.append("author", author.value);
+  data.append("title", title.value);
+  data.append("numberOfPages", numberOfPages.value);
   console.log("Adding book");
   const response = await axios.post("/books/CreateBook", data, config);
   console.log("Book: " + Title.value + " Added");

@@ -1,5 +1,6 @@
 ﻿using Bibliotekarz.Shared.Model;
 using Library.Server.Services;
+using LibraryVue.Server.Models;
 using LibraryVue.Server.Models.Auth;
 using LibraryVue.Server.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -91,19 +92,20 @@ namespace Library.Server.Controllers
             }
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateBook(IFormFile file)//, [FromBody] Book book)
+        public async Task<IActionResult> CreateBook([FromForm] CreateBookRequest req)
         {
-            if (file != null)
+            if (req != null)
             {
 
-                string fileName = await _serverFileServicer.SaveFile(file);
-                /*
+                string fileName = await _serverFileServicer.SaveFile(req.file);
+                
                 if (fileName is not null)
                 {
+                    Book book = new Book(req.Author,req.Title,req.NumberOfPages);
                     await _databaseService.PostBook(book, fileName);
                     return Created();
                 }
-                */
+                
             }
             return BadRequest();
         }

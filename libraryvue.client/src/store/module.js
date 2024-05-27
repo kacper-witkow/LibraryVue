@@ -23,6 +23,7 @@ export const useAuthStore = defineStore("auth", {
     SingOut() {
       this.token = "";
       this.user = "";
+      this.isAdmin = false;
     },
   },
   getters: {

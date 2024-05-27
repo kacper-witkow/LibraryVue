@@ -17,6 +17,12 @@
         >
           borrow
         </button>
+        <RouterLink
+          :to="{ path: '/book/' + props.id, params: props.id }"
+          class="ml-3 rounded-md bg-blue-400 p-1 shadow-md hover:bg-blue-600"
+        >
+          info
+        </RouterLink>
       </div>
     </div>
   </div>
