@@ -15,6 +15,7 @@ public class Book
     public int NumberOfPages { get; set; }
     public bool IsBorrowed { get; set; }
     public string? UserName { get; set; }
+    public string? FileName { get; set; }
 
     public Book(string _Author, string _Title,int _NumberOfPages)
     {

@@ -19,7 +19,7 @@ namespace Library.Server.Services
         public async void DeleteBook(int id)
         {
             _dbContext.Books.Remove(_dbContext.Books.First(b => b.Id == id));
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
 
         public async Task<Book> GetBook(int id)
@@ -80,11 +80,24 @@ namespace Library.Server.Services
             _dbContext.Books.Update(book);
             _dbContext.SaveChanges();
         }
+
+        public async Task<string> GetBookFileName(int id)
+        {
+            BookDto book = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
+
+            string fileName= book.FileName;
+            if(fileName !=null)
+            {
+                return fileName;
+            }
+            return null;
+        }
     }
 
     public interface IBookDatabaseService
     {
         public Task<Book> GetBook(int id);
+        public Task<string> GetBookFileName(int id);
         public Task<IEnumerable<Book>> GetBooks();
         public Task<IEnumerable<Book>> GetAllAvailableBooks();
         public Task<IEnumerable<Book>> GetUserBooks(string userName); 

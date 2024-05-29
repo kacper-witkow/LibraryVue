@@ -1,6 +1,7 @@
 <template>
   <div class="mt-3 w-5/6">
-    <AddBookForm v-if="AddingForm"> </AddBookForm>
+    <AddBookForm @CloseAddingBook="CloseAddingBook" v-if="AddingForm">
+    </AddBookForm>
     <div class="flex w-full flex-col object-center">
       <h1 class="text-center text-3xl">Welcome in our library</h1>
       <div v-if="store.isLogin">
@@ -15,7 +16,10 @@
         <h1 class="mt-3 text-center text-3xl">
           Below you can choose book you want to borrow
         </h1>
-        <p v-if="books[0] == null" class="mt-20 text-center text-5xl">
+        <p
+          v-if="books == null || books[0] == null"
+          class="mt-20 text-center text-5xl"
+        >
           Sorry no more books to borrow
         </p>
         <div v-for="book in books" :key="book['id']">
@@ -43,7 +47,14 @@ import useAuthStore from "@/store/module.js";
 const store = useAuthStore();
 const books = ref(null);
 const AddingForm = ref(false);
-onMounted(async () => {
+
+function CloseAddingBook() {
+  AddingForm.value = false;
+  GetAllAvailableBooks();
+}
+onMounted(async () => GetAllAvailableBooks());
+
+async function GetAllAvailableBooks() {
   console.log(store.token);
   const response = await fetch("/books/GetAllAvailableBooks", {
     method: "GET",
@@ -51,5 +62,5 @@ onMounted(async () => {
     headers: { Authorization: "Bearer " + store.token },
   });
   books.value = await response.json();
-});
+}
 </script>

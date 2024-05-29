@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Library.Server.Controllers
 {
-
+    [Authorize]
     [ApiController]
     [Route("Api/[controller]")]
     public class BookController : Controller
@@ -31,32 +33,20 @@ namespace Library.Server.Controllers
             _serverFileServicer = serverFileServicer;
         }
 
-
         [HttpGet("[action]")]
-        public string Test()
-        {
-            return "Dziala";
-        }
-
-        [HttpGet("[action]")]
-        public async Task<IActionResult> GetAll()
-        {
-
-            var result = await _databaseService.GetBooks();
-            return Ok(result);
-        }
-        [HttpGet("[action]")]
-        [Authorize]
         public async Task<IActionResult> GetAllAuth()
         {
             _logger.LogInformation("Entering GetAllAuth method.");
+            IEnumerable<Book> books = new List<Book>();
 
             if (!User.IsInRole(UserRoles.User))
             {
-                _logger.LogWarning("User is not in the required role.");
-                return Unauthorized("User does not have the required role.");
+                books = await _databaseService.GetBooks();
             }
-            IEnumerable<Book> books = await _databaseService.GetUserBooks(User.Identity.Name);
+            else
+            {
+                books = await _databaseService.GetUserBooks(User.Identity.Name);
+            }
             return Ok(books);
         }
 
@@ -84,7 +74,37 @@ namespace Library.Server.Controllers
             try
             {
                 Book book = await _databaseService.GetBook(Id);
-                return Ok(book);
+                if (book.UserName == User.Identity.Name || User.IsInRole(UserRoles.Admin))
+                        return Ok(book);
+
+                return Unauthorized("This book doesn't belong to you!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Nie znaleziono książki");
+            }
+        }
+        [HttpGet("[action]/{Id}")]
+        public async Task<IActionResult> GetFile(int Id)
+        {
+            try
+            {
+                Book book = await _databaseService.GetBook(Id);
+
+                if (book.UserName == User.Identity.Name || User.IsInRole(UserRoles.Admin))
+                {
+                    string fileName = book.FileName;
+                    MemoryStream responseStream = new MemoryStream();
+                    responseStream = await _serverFileServicer.ReadFile(fileName);
+
+                    return File(responseStream, "application/pdf", fileName);
+                }
+                else
+                {
+
+                    return Unauthorized();
+                }
+
             }
             catch (Exception ex)
             {
@@ -94,7 +114,7 @@ namespace Library.Server.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateBook([FromForm] CreateBookRequest req)
         {
-            if (req != null)
+            if (req != null && User.IsInRole(UserRoles.Admin))
             {
 
                 string fileName = await _serverFileServicer.SaveFile(req.file);
@@ -111,12 +131,19 @@ namespace Library.Server.Controllers
         }
 
         [HttpDelete("[action]/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteBook(int id)
         {
             try
             {
-                _databaseService.DeleteBook(id);
-                return Ok();
+                if (User.IsInRole(UserRoles.Admin))
+                {
+                    _databaseService.DeleteBook(id);
+                    return Ok();
+                }
+                else
+                {
+                    return Unauthorized();
+                }
             }
             catch (Exception ex)
             {

@@ -8,6 +8,7 @@
           :title="book['title']"
           :author="book['author']"
           :numberOfPages="book['numberOfPages']"
+          :UserName="book['userName']"
           :isBorrowed="book['isBorrowed']"
           :id="book['id']"
         />

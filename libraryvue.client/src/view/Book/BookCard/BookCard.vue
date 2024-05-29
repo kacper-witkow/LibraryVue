@@ -8,11 +8,21 @@
 
         <p class="flex p-1">~{{ author }}</p>
       </div>
-      <div class="flex">
-        <p>Number of pages -{{ numberOfPages }}</p>
+      <div class="ml-3 flex text-sm">
+        <div class="flex" v-if="store.isAdmin">
+          <button
+            class="rounded-md bg-red-400 shadow-md hover:bg-red-600"
+            @click="DeleteBook"
+          >
+            Delete Book
+          </button>
+          <div class="flex" v-if="isBorrowed">
+            <p class="m-2">Is borrowed by -{{ UserName }}</p>
+          </div>
+        </div>
         <button
           v-if="!isBorrowed"
-          class="ml-3 rounded-md bg-green-400 p-1 shadow-md hover:bg-green-600"
+          class="rounded-md bg-green-400 shadow-md hover:bg-green-600"
           @click="BorrowBook"
         >
           borrow
@@ -35,6 +45,7 @@ const props = defineProps([
   "title",
   "numberOfPages",
   "isBorrowed",
+  "UserName",
 ]);
 
 import useAuthStore from "@/store/module.js";
@@ -49,5 +60,12 @@ async function BorrowBook(id) {
     headers: { Authorization: "Bearer " + store.token },
   });
   router.push("/");
+}
+async function DeleteBook(id) {
+  await fetch("/books/DeleteBook/" + props.id, {
+    method: "DELETE",
+    credentials: "same-origin",
+    headers: { Authorization: "Bearer " + store.token },
+  }).finally(router.push("/"));
 }
 </script>

@@ -16,9 +16,9 @@ export const useAuthStore = defineStore("auth", {
       console.log("Set token to:" + token);
       this.token = token;
     },
-    setAdmin() {
+    setAdmin(isAdmin) {
       console.log("Admin set");
-      this.isAdmin = true;
+      this.isAdmin = isAdmin;
     },
     SingOut() {
       this.token = "";

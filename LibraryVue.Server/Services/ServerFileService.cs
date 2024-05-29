@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Azure.Core;
 using Bibliotekarz.Server.Data.Context;
 using Library.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,24 @@ namespace LibraryVue.Server.Services
             _logger = logger;
         }
 
-        public void ReadFile(string name)
+        public async Task<MemoryStream> ReadFile(string name)
         {
-            throw new NotImplementedException();
+            if (name == null || name.Length == 0)
+                return null;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles");
+
+            path = Path.Combine(path, name);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+
+            return memory;
+
         }
 
         async public Task<string> SaveFile(IFormFile file)
@@ -28,7 +44,12 @@ namespace LibraryVue.Server.Services
             if (file == null || file.Length == 0)
                 return null;
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles", file.FileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles");
+
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            path = Path.Combine(path,file.FileName);
 
             using (var stream = new FileStream(path, FileMode.Create))
             {
@@ -42,7 +63,7 @@ namespace LibraryVue.Server.Services
     public interface IServerFileService
     {
         Task<string> SaveFile(IFormFile  file);
-        void ReadFile(string name);
+        Task<MemoryStream> ReadFile(string name);
 
     }
 }

@@ -25,6 +25,7 @@
       </FormField>
       <Button type="submit"> Log In </Button>
     </form>
+    <p class="text-red-600">{{ errorLogin }}</p>
   </CardWrapper>
 </template>
 
@@ -45,6 +46,7 @@ import { useAuthStore } from "@/store/module.js";
 import { useRouter } from "vue-router";
 const storeAuth = useAuthStore();
 const router = useRouter();
+const errorLogin = ref(null);
 
 async function Login() {
   console.log("Logowanie admina");
@@ -58,12 +60,17 @@ async function Login() {
       Password: Password.value,
     }),
   });
-  const { username, token, expiration } = await response.json();
-  console.log(username, token);
-  storeAuth.setUser(username);
-  storeAuth.setToken(token);
-  storeAuth.setAdmin();
-  await router.push({ name: "home" });
+
+  if (response.status === 400 || response.status === 401)
+    errorLogin.value = "Wrong email or password ";
+  else {
+    const { username, token, expiration, isAdmin } = await response.json();
+    console.log(username, token);
+    storeAuth.setUser(username);
+    storeAuth.setToken(token);
+    storeAuth.setAdmin(isAdmin);
+    await router.push({ name: "home" });
+  }
 }
 
 const Password = ref("");

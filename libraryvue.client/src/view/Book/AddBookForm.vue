@@ -33,7 +33,11 @@
         </FormControl>
       </FormItem>
     </FormField>
-    <Button class="m-2" type="submit"> Add Book</Button>
+    <div class="flex justify-between">
+      <Button class="m-4" type="submit"> Add Book</Button>
+      <Button class="m-4" @click="CloseAddingBook">Close</Button>
+    </div>
+    <p class="text-3xl text-red-500">{{ errorAdding }}</p>
   </Form>
 </template>
 <script setup>
@@ -50,11 +54,22 @@ import {
 import { Input } from "@/components/ui/input";
 import axios, * as others from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import useAuthStore from "@/store/module.js";
+const store = useAuthStore();
+const router = useRouter();
+
+const emit = defineEmits(["CloseAddingBook"]);
+
+function CloseAddingBook() {
+  emit("CloseAddingBook");
+}
 
 const file = ref(null);
 const author = ref(null);
 const title = ref(null);
 const numberOfPages = ref(null);
+const errorAdding = ref(null);
 const uploadFile = (event) => {
   file.value = event.target.files[0];
 };
@@ -62,8 +77,9 @@ const uploadFile = (event) => {
 async function AddBook() {
   let data = new FormData();
   let config = {
-    header: {
+    headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: "Bearer " + store.token,
     },
   };
   data.append("file", file.value);
@@ -71,7 +87,14 @@ async function AddBook() {
   data.append("title", title.value);
   data.append("numberOfPages", numberOfPages.value);
   console.log("Adding book");
-  const response = await axios.post("/books/CreateBook", data, config);
-  console.log("Book: " + Title.value + " Added");
+  const response = await axios
+    .post("/books/CreateBook", data, config)
+    .then(() => {
+      console.log("Book: " + title.value + " Added");
+      emit("CloseAddingBook");
+    })
+    .catch(() => {
+      errorAdding.value = "Book can't be send";
+    });
 }
 </script>

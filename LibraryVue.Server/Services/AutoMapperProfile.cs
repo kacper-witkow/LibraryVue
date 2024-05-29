@@ -14,7 +14,7 @@ namespace Bibliotekarz.Server.Services
         public AutoMapperProfile()
         {
             CreateMap<BookDto, Book>();
-            CreateMap<Book, BookDto>().ForMember(b => b.FileName, opt=>opt.Ignore());
+            CreateMap<Book, BookDto>();
         }
     }
 }
