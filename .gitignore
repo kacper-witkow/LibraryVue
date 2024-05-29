@@ -366,3 +366,5 @@ FodyWeavers.xsd
 .bin
 *.bin
 .DS_Store
+
+/LibraryVue.Server/UplodedFiles
